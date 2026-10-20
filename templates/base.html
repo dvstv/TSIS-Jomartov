@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Онлайн-библиотека: находите книги и пополняйте общую коллекцию.">
+  <title>{% block title %}Открытая библиотека{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="{% static 'favicon.svg' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="{% static 'js/main.js' %}" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">К содержимому</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="{% url 'books:home' %}"><span class="brand-icon" aria-hidden="true">◫</span> Открытая<span class="brand-light">библиотека</span></a>
+    <nav aria-label="Основная навигация">
+      <a href="{% url 'books:home' %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>Главная</a>
+      <a href="{% url 'books:list' %}" {% if request.resolver_match.url_name == 'list' %}aria-current="page"{% endif %}>Каталог</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'books:add' %}">Добавить книгу</a>
+        <span class="username">{{ user.username }}</span>
+        <form action="{% url 'users:logout' %}" method="post" class="logout-form">{% csrf_token %}<button class="nav-button" type="submit">Выйти</button></form>
+      {% else %}
+        <a href="{% url 'users:login' %}">Войти</a>
+        <a class="button button-small" href="{% url 'users:register' %}">Регистрация</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+<main id="main">
+  {% if messages %}<div class="container messages" aria-live="polite">{% for message in messages %}<div class="message">{{ message }}</div>{% endfor %}</div>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="site-footer"><div class="container footer-inner"><a class="footer-brand" href="{% url 'books:home' %}">Открытая библиотека</a><p>Хорошие истории объединяют.</p><span>Учебный проект · {% now "Y" %}</span></div></footer>
+</body>
+</html>

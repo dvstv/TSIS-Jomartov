@@ -1,0 +1,9 @@
+<article class="book-card">
+  <a href="{{ book.get_absolute_url }}" class="cover-link" tabindex="-1" aria-hidden="true">
+    {% if book.cover %}<img src="{{ book.cover.url }}" alt="" class="book-cover" loading="lazy" width="600" height="840">{% else %}<div class="cover-placeholder"><span>Открытая библиотека</span><strong>{{ book.title }}</strong><span>{{ book.author }}</span></div>{% endif %}
+    <span class="cover-arrow" aria-hidden="true">→</span>
+  </a>
+  <div class="book-meta"><span>{{ book.get_genre_display }}</span><span>{{ book.year }}</span></div>
+  <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h3>
+  <p class="book-author">{{ book.author }}</p>
+</article>

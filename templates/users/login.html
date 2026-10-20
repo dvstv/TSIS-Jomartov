@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}Вход · Открытая библиотека{% endblock %}
+{% block content %}<section class="container page-section"><div class="form-panel"><p class="eyebrow">С возвращением</p><h1 class="page-title">Продолжим историю?</h1><p class="lead">Войдите, чтобы добавлять книги в коллекцию.</p><form method="post">{% csrf_token %}{% include 'includes/form_fields.html' %}{% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}<button class="button full-width" type="submit">Войти</button></form><p class="form-footer">Ещё нет аккаунта? <a class="text-link" href="{% url 'users:register' %}">Зарегистрироваться</a></p></div></section>{% endblock %}
